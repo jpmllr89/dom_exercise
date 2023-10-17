@@ -12,6 +12,7 @@
  */
 
 // Your code goes here...
+const allItems = document.getElementsByClassName('item');
 
 
 
@@ -23,7 +24,7 @@
  * */
 
 // Your code goes here
-
+const main = document.getElementById('main');
 
 
 /**
@@ -34,7 +35,7 @@
  */
 
 // Your code goes here
-
+const favs = document.getElementById('favs');
 
 
 /**
@@ -47,7 +48,23 @@
  */
 
 // Your code goes here
-
+const brokenHeart='fa-heart-broken';
+const fullHeart = 'fa-heart-circle-plus';
+function updateCollections(id, direction){
+  const selection = document.getElementById(id);
+  console.log(selection);
+  if(direction === 'toMain'){
+    favs.removeChild(selection);
+    main.appendChild(selection);
+    selection.children[0].classList.remove(brokenHeart);
+    selection.children[0].classList.add(fullHeart);
+  }else if(direction === 'toFavs'){
+    main.removeChild(selection);
+    favs.appendChild(selection);
+    selection.children[0].classList.remove(fullHeart);
+    selection.children[0].classList.add(brokenHeart);
+  }
+}
 
 
 /**
