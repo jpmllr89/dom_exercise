@@ -13,6 +13,7 @@
 
 // Your code goes here...
 const allItems = document.getElementsByClassName('item');
+console.log(allItems);
 
 
 
@@ -54,13 +55,13 @@ function updateCollections(id, direction){
   const selection = document.getElementById(id);
   console.log(selection);
   if(direction === 'toMain'){
-    favs.removeChild(selection);
-    main.appendChild(selection);
+    // favs.removeChild(selection);
+    main.append(selection);
     selection.children[0].classList.remove(brokenHeart);
     selection.children[0].classList.add(fullHeart);
   }else if(direction === 'toFavs'){
-    main.removeChild(selection);
-    favs.appendChild(selection);
+    // main.removeChild(selection);
+    favs.append(selection);
     selection.children[0].classList.remove(fullHeart);
     selection.children[0].classList.add(brokenHeart);
   }
@@ -83,4 +84,25 @@ function updateCollections(id, direction){
 
 // Your code goes here...
 
+// for(let i=0; i<allItems.length; i++){
+  Array.from(allItems).forEach((item)=>{
+    item.addEventListener('click', function(e){
+      const target = e.target.parentNode.id;
+      // const theOne = document.getElementById('1');
+      console.log(target);
+      // favs.appendChild(theOne);
+      if(target == 'main'){
+        updateCollections(item.id, 'toFavs');
+      } else if(target == 'favs'){
+        updateCollections(item.id, 'toMain');
+        
+      }
+  })});
+    // if(e.target.parentNode.id === main){
+    //   updateCollections(i.id, 'toFavs');
+    // }else if(e.target.parentNode.id === favs){
+    //   updateCollections(i.id, 'toMain');
+    // };
+  // });
+  // }
 
