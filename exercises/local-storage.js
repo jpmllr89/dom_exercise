@@ -23,6 +23,8 @@
  * * Make all the items that are listed in the favorites LS save the red background color when the page is reloaded
  */
 
+
+// console.log(localStorage.favorites.split(','));
 /**
  * @hint
  * Here is a plan of how you can structure your code. You can follow it or choose your own way to go
@@ -38,3 +40,32 @@
  */
 
 // Your code goes here...
+localStorage.setItem('favorites', '');
+const callBackFn = (e) => {
+  const clicked = e.target;
+  const localStorageArray = Array.from(localStorage.favorites.split(''))
+  if(!localStorageArray.find(e=> e==clicked.id)){  
+    // console.log("Yeet")
+    console.log(clicked.id);
+    let storageData = localStorage.getItem('favorites');
+    storageData += `${clicked.id}`;
+    localStorage.setItem('favorites', storageData);
+    localStorageArray.push(clicked.id);
+    clicked.classList.add('red');
+  }else if(localStorageArray.find(e => e==clicked.id)){
+    console.log(clicked.id);
+    let toDelete = clicked.id;
+    let storageArr = localStorage.getItem('favorites').split('');
+    storageArr.splice(storageArr.indexOf(toDelete), 1).join('');
+    localStorage.setItem('favorites', storageArr);
+    clicked.classList.remove('red');
+  }
+}
+
+// const callBackFn2 = 
+
+const cards = document.getElementsByClassName('card');
+console.log(cards);
+Array.from(cards).forEach((item) => {
+  item.addEventListener('click', callBackFn);
+})
