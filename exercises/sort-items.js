@@ -12,7 +12,8 @@
  */
 
 // Your code goes here...
-
+const allItems = document.getElementsByClassName("item");
+console.log(allItems);
 
 
 /**
