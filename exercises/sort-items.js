@@ -39,6 +39,25 @@ const sortBtn = document.getElementsByClassName('sortBtn');
  */
 
 // Your code goes here...
+function sortData(direction){
+  const mainNode = document.getElementById("main");
+  console.log(mainNode, direction);
+  const itemsArray = Array.from(allItems);
+  console.log(itemsArray);
+  console.log(itemsArray[0].id);
+  if(direction === 'desc'){
+    itemsArray.sort((a,b) => b.id-a.id);
+    itemsArray.forEach((item)=>{
+      mainNode.append(item);
+    })
+  }else if(direction === 'asc'){
+    itemsArray.sort((a, b) => a.id - b.id);
+    itemsArray.forEach((item)=>{
+      mainNode.append(item);
+    })
+  }
+}
+
 
 
 
@@ -52,4 +71,9 @@ const sortBtn = document.getElementsByClassName('sortBtn');
 
 // Your code goes here...
 
+Array.from(sortBtn).forEach((button) => {
+  button.addEventListener('click', function(e){
+    sortData(button.getAttribute('data-sortdir'));
+  });
+})
 
