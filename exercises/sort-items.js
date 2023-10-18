@@ -24,7 +24,7 @@ console.log(allItems);
  */
 
 // Your code goes here...
-
+const sortBtn = document.getElementsByClassName('sortBtn');
 
 
 /**
