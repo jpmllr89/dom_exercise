@@ -40,32 +40,49 @@
  */
 
 // Your code goes here...
-localStorage.setItem('favorites', '');
-const callBackFn = (e) => {
-  const clicked = e.target;
-  const localStorageArray = Array.from(localStorage.favorites.split(''))
-  if(!localStorageArray.find(e=> e==clicked.id)){  
-    // console.log("Yeet")
-    console.log(clicked.id);
-    let storageData = localStorage.getItem('favorites');
-    storageData += `${clicked.id}`;
-    localStorage.setItem('favorites', storageData);
-    localStorageArray.push(clicked.id);
-    clicked.classList.add('red');
-  }else if(localStorageArray.find(e => e==clicked.id)){
-    console.log(clicked.id);
-    let toDelete = clicked.id;
-    let storageArr = localStorage.getItem('favorites').split('');
-    storageArr.splice(storageArr.indexOf(toDelete), 1).join('');
-    localStorage.setItem('favorites', storageArr);
-    clicked.classList.remove('red');
-  }
+const data = {
+  clicks: Array.from(localStorage.getItem('favorites'))
+}
+console.log(data.clicks);
+const cards = document.getElementsByClassName('card');
+function setRed(e){
+  e.classList.add('red');
+}
+function removeRed(e){
+  e.classList.remove('red');
 }
 
-// const callBackFn2 = 
+const addToLS = (e) => {
+  console.log(data.clicks);
+  if(data.clicks !== []){
+    data.clicks.push(e.id);
+  }
+  let storageData = JSON.stringify(data.clicks);
+  localStorage.setItem('favorites', storageData);
+}
 
-const cards = document.getElementsByClassName('card');
-console.log(cards);
+const deleteFromLS = (e) => {
+  data.clicks.splice(data.clicks.indexOf(e.id), 1).join('');
+  let storageData = JSON.stringify(data.clicks);
+  localStorage.setItem('favorites', storageData);
+}
+
+const callBackFn = (e) => {
+  const clicked = e.target;
+  if(!data.clicks.find(e=> e==clicked.id)){  
+    setRed(clicked);
+    addToLS(clicked);
+  }
+  else if(data.clicks.find(e => e==clicked.id)){
+    removeRed(clicked);
+    deleteFromLS(clicked);
+  }
+  console.log(data.clicks);
+}
 Array.from(cards).forEach((item) => {
   item.addEventListener('click', callBackFn);
+  if(localStorage.favorites.includes(item.id)){
+    item.classList.add('red');
+
+  }
 })
