@@ -40,10 +40,69 @@
  */
 
 // Your code goes here...
-const data = {
-  clicks: Array.from(localStorage.getItem('favorites'))
+// const data = {
+//   clicks: '',
+//   clicked: localStorage.getItem('favorites')
+// }
+// console.log(data.clicks);
+// const cards = document.getElementsByClassName('card');
+// function setRed(e){
+//   e.classList.add('red');
+// }
+// function removeRed(e){
+//   e.classList.remove('red');
+// }
+
+// const addToLS = (e) => {
+//   console.log(data.clicks);
+//   if(data.clicked == null){
+//     localStorage.setItem('favorites', data.clicks);
+//     data.clicks+=e.id;
+//   }
+//   if(data.clicked !== ''){
+//     data.clicks += e.id;
+//   }
+//   let storageData = data.clicks;
+//   localStorage.setItem('favorites', storageData);
+// }
+
+// const deleteFromLS = (e) => {
+//   let storage = data.clicked;
+//   if(storage !== null && storage !== ''){
+//     let dataArray = data.clicks.split('');
+//     // console.log("alert");
+//     dataArray.splice(dataArray.indexOf(e.id), 1).join('');
+//     let storageData = dataArray.join('');
+//     data.clicked = localStorage.setItem('favorites', storageData);
+//   }
+// }
+
+// const callBackFn = (e) => {
+//   const clicked = e.target;
+//   let storage = Array.from(data.clicked);
+//   if(!data.clicked.split('').find(e=> e==clicked.id)){  
+//     setRed(clicked);
+//     addToLS(clicked);
+//   }
+//   else if(data.clicked.split('').find(e => e==clicked.id)){
+//     removeRed(clicked);
+//     deleteFromLS(clicked);
+//   }
+//   console.log(data.clicks);
+// }
+// Array.from(cards).forEach((item) => {
+//   item.addEventListener('click', callBackFn);
+//   // if(data.clicks.includes(item.id)){
+//   //   item.classList.add('red');
+
+//   // }
+// })
+
+
+const workingStorage = {
+  clicks : '',
+  clicked : localStorage.getItem('favorites')
 }
-console.log(data.clicks);
 const cards = document.getElementsByClassName('card');
 function setRed(e){
   e.classList.add('red');
@@ -53,35 +112,48 @@ function removeRed(e){
 }
 
 const addToLS = (e) => {
-  console.log(data.clicks);
-  if(data.clicks !== []){
-    data.clicks.push(e.id);
+  data = localStorage.getItem('favorites');
+  console.log(data)
+  // if(data == null){
+  //   data += e.id;
+  // }
+  if(data !== ''){
+    data += e.id;
   }
-  let storageData = JSON.stringify(data.clicks);
+  let storageData = data;
   localStorage.setItem('favorites', storageData);
 }
 
 const deleteFromLS = (e) => {
-  data.clicks.splice(data.clicks.indexOf(e.id), 1).join('');
-  let storageData = JSON.stringify(data.clicks);
-  localStorage.setItem('favorites', storageData);
+  data = localStorage.getItem('favorites');
+  if(data !== null && data !== ''){
+    let dataArray = data.split('');
+    console.log(dataArray)
+    // console.log("alert");
+    dataArray.splice(dataArray.indexOf(e.id), 1).join('');
+    console.log(dataArray);
+    let storageData = dataArray.join('');
+    localStorage.setItem('favorites', storageData);
+  }
 }
 
 const callBackFn = (e) => {
   const clicked = e.target;
-  if(!data.clicks.find(e=> e==clicked.id)){  
+  data = localStorage.getItem('favorites');
+  if(!data.split('').find(e=> e==clicked.id)){  
     setRed(clicked);
     addToLS(clicked);
   }
-  else if(data.clicks.find(e => e==clicked.id)){
+  else if(data.split('').find(e => e==clicked.id)){
     removeRed(clicked);
     deleteFromLS(clicked);
   }
-  console.log(data.clicks);
+  console.log(data);
 }
 Array.from(cards).forEach((item) => {
   item.addEventListener('click', callBackFn);
-  if(localStorage.favorites.includes(item.id)){
+  if(Array.from(workingStorage.clicked).includes(item.id)){
+    console.log(Array.from(workingStorage.clicked))
     item.classList.add('red');
 
   }
