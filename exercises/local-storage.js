@@ -40,121 +40,45 @@
  */
 
 // Your code goes here...
-// const data = {
-//   clicks: '',
-//   clicked: localStorage.getItem('favorites')
-// }
-// console.log(data.clicks);
-// const cards = document.getElementsByClassName('card');
-// function setRed(e){
-//   e.classList.add('red');
-// }
-// function removeRed(e){
-//   e.classList.remove('red');
-// }
 
-// const addToLS = (e) => {
-//   console.log(data.clicks);
-//   if(data.clicked == null){
-//     localStorage.setItem('favorites', data.clicks);
-//     data.clicks+=e.id;
-//   }
-//   if(data.clicked !== ''){
-//     data.clicks += e.id;
-//   }
-//   let storageData = data.clicks;
-//   localStorage.setItem('favorites', storageData);
-// }
-
-// const deleteFromLS = (e) => {
-//   let storage = data.clicked;
-//   if(storage !== null && storage !== ''){
-//     let dataArray = data.clicks.split('');
-//     // console.log("alert");
-//     dataArray.splice(dataArray.indexOf(e.id), 1).join('');
-//     let storageData = dataArray.join('');
-//     data.clicked = localStorage.setItem('favorites', storageData);
-//   }
-// }
-
-// const callBackFn = (e) => {
-//   const clicked = e.target;
-//   let storage = Array.from(data.clicked);
-//   if(!data.clicked.split('').find(e=> e==clicked.id)){  
-//     setRed(clicked);
-//     addToLS(clicked);
-//   }
-//   else if(data.clicked.split('').find(e => e==clicked.id)){
-//     removeRed(clicked);
-//     deleteFromLS(clicked);
-//   }
-//   console.log(data.clicks);
-// }
-// Array.from(cards).forEach((item) => {
-//   item.addEventListener('click', callBackFn);
-//   // if(data.clicks.includes(item.id)){
-//   //   item.classList.add('red');
-
-//   // }
-// })
-
-
-const workingStorage = {
-  clicks : '',
-  clicked : localStorage.getItem('favorites')
+if(localStorage.getItem('favorites') == null){
+  localStorage.setItem('favorites', JSON.stringify([]));
 }
+
+
+// console.log(workingStorage.clicked)
 const cards = document.getElementsByClassName('card');
+
+// Change color functions
 function setRed(e){
-  e.classList.add('red');
+  document.getElementById(e).classList.add('red');
 }
+
 function removeRed(e){
-  e.classList.remove('red');
-}
-
-const addToLS = (e) => {
-  data = localStorage.getItem('favorites');
-  console.log(data)
-  // if(data == null){
-  //   data += e.id;
-  // }
-  if(data !== ''){
-    data += e.id;
-  }
-  let storageData = data;
-  localStorage.setItem('favorites', storageData);
-}
-
-const deleteFromLS = (e) => {
-  data = localStorage.getItem('favorites');
-  if(data !== null && data !== ''){
-    let dataArray = data.split('');
-    console.log(dataArray)
-    // console.log("alert");
-    dataArray.splice(dataArray.indexOf(e.id), 1).join('');
-    console.log(dataArray);
-    let storageData = dataArray.join('');
-    localStorage.setItem('favorites', storageData);
-  }
+  document.getElementById(e).classList.remove('red');
 }
 
 const callBackFn = (e) => {
-  const clicked = e.target;
-  data = localStorage.getItem('favorites');
-  if(!data.split('').find(e=> e==clicked.id)){  
-    setRed(clicked);
-    addToLS(clicked);
+
+  const elementId = e.target.id;
+  console.log(elementId)
+  const currentStorage = JSON.parse(localStorage.getItem('favorites'));
+
+  if(!currentStorage.includes(elementId)){  
+    currentStorage.push(elementId);
+    setRed(elementId);
   }
-  else if(data.split('').find(e => e==clicked.id)){
-    removeRed(clicked);
-    deleteFromLS(clicked);
+  else if(currentStorage.includes(elementId)){
+    const index = currentStorage.indexOf(elementId);
+    currentStorage.splice(index, 1);
+    removeRed(elementId);
   }
-  console.log(data);
+  localStorage.setItem('favorites', JSON.stringify(currentStorage))
 }
+
 Array.from(cards).forEach((item) => {
   item.addEventListener('click', callBackFn);
-  if(Array.from(workingStorage.clicked).includes(item.id)){
-    console.log(Array.from(workingStorage.clicked))
+  if(localStorage.getItem('favorites').includes(item.id)){
     item.classList.add('red');
-
   }
-})
+});
