@@ -41,21 +41,10 @@ const sortBtn = document.getElementsByClassName('sortBtn');
 // Your code goes here...
 function sortData(direction){
   const mainNode = document.getElementById("main");
-  console.log(mainNode, direction);
   const itemsArray = Array.from(allItems);
-  console.log(itemsArray);
-  console.log(itemsArray[0].id);
-  if(direction === 'desc'){
-    itemsArray.sort((a,b) => b.id-a.id);
-    itemsArray.forEach((item)=>{
-      mainNode.append(item);
-    })
-  }else if(direction === 'asc'){
-    itemsArray.sort((a, b) => a.id - b.id);
-    itemsArray.forEach((item)=>{
-      mainNode.append(item);
-    })
-  }
+  direction === "desc" ? itemsArray.sort((a,b) => b.id-a.id).forEach((item => {mainNode.append(item)})) :
+   itemsArray.sort((a,b) => a.id -b.id).forEach((item)=>{mainNode.append(item)});
+
 }
 
 
