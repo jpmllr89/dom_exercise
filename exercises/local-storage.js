@@ -48,6 +48,8 @@ if(localStorage.getItem('favorites') == null){
 
 // console.log(workingStorage.clicked)
 const cards = document.getElementsByClassName('card');
+const cardContainer = document.querySelector('.cardsContainer');
+console.log(cardContainer);
 
 // Change color functions
 function setRed(e){
@@ -75,9 +77,17 @@ const callBackFn = (e) => {
   }
   localStorage.setItem('favorites', JSON.stringify(currentStorage))
 }
+console.log(typeof cardContainer);
+// Array.from(cardContainer).forEach((item) => {
+//   item.addEventListener('click', callBackFn);
+//   if(localStorage.getItem('favorites').includes(item.id)){
+//     item.classList.add('red');
+//   }
+// });
 
-Array.from(cards).forEach((item) => {
-  item.addEventListener('click', callBackFn);
+
+cardContainer.addEventListener('click', callBackFn);
+Array.from(cards).forEach((item) =>{
   if(localStorage.getItem('favorites').includes(item.id)){
     item.classList.add('red');
   }

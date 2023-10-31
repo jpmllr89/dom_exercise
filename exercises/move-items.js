@@ -49,21 +49,43 @@ const favs = document.getElementById('favs');
  */
 
 // Your code goes here
-const brokenHeart='fa-heart-broken';
+const brokenHeart= 'fa-heart-broken';
 const fullHeart = 'fa-heart-circle-plus';
 function updateCollections(id, direction){
+  // const selection = document.getElementById(id);
+  // console.log(selection);
+  // if(direction === 'toMain'){
+  //   // favs.removeChild(selection);
+  //   main.append(selection);
+  //   // selection.children[0].classList.remove(brokenHeart);
+  //   // selection.children[0].classList.add(fullHeart);
+
+  // }else if(direction === 'toFavs'){
+  //   // main.removeChild(selection);
+  //   favs.append(selection);
+  //   selection.children[0].classList.remove(fullHeart);
+  //   selection.children[0].classList.add(brokenHeart);
+  // }
+
   const selection = document.getElementById(id);
   console.log(selection);
-  if(direction === 'toMain'){
-    // favs.removeChild(selection);
-    main.append(selection);
-    selection.children[0].classList.remove(brokenHeart);
-    selection.children[0].classList.add(fullHeart);
-  }else if(direction === 'toFavs'){
-    // main.removeChild(selection);
-    favs.append(selection);
-    selection.children[0].classList.remove(fullHeart);
-    selection.children[0].classList.add(brokenHeart);
+
+  if(selection){
+    selection
+      .querySelector('i')
+      .classList.toggle('fa-heart-broken', direction ==="toFavs");
+    
+    selection
+      .querySelector('i')
+      .classList.toggle('fa-heart-circle-plus', direction === 'toMain');
+    
+    const targetParent = 
+      direction === 'toMain' 
+        ? document.getElementById('main') 
+        : document.getElementById('favs');
+    
+    targetParent.appendChild(selection);
+
   }
 }
 
@@ -88,15 +110,8 @@ function updateCollections(id, direction){
   Array.from(allItems).forEach((item)=>{
     item.addEventListener('click', function(e){
       const target = e.target.parentNode.id;
-      // const theOne = document.getElementById('1');
       console.log(target);
-      // favs.appendChild(theOne);
-      if(target == 'main'){
-        updateCollections(item.id, 'toFavs');
-      } else if(target == 'favs'){
-        updateCollections(item.id, 'toMain');
-        
-      }
+      target == 'main' ? updateCollections(item.id, 'toFavs') : updateCollections(item.id, 'toMain')
   })});
     // if(e.target.parentNode.id === main){
     //   updateCollections(i.id, 'toFavs');
